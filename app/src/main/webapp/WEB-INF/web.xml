@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+           version="3.0">
+    <!--
+        <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-context.xml</param-value>
+        </context-param>
+
+        <servlet>
+            <servlet-name>springMVC</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath:spring-mvc.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>springMVC</servlet-name>
+            <url-pattern>/app</url-pattern>
+        </servlet-mapping>
+
+        <listener>
+            <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        </listener>
+         -->
+    <!--
+        <listener>
+           <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+        </listener>
+        <filter>
+            <filter-name>log4jServletFilter</filter-name>
+            <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+           </filter>
+        <filter-mapping>
+            <filter-name>log4jServletFilter</filter-name>
+            <url-pattern>/app</url-pattern>
+            <dispatcher>REQUEST</dispatcher>
+            <dispatcher>FORWARD</dispatcher>
+            <dispatcher>INCLUDE</dispatcher>
+            <dispatcher>ERROR</dispatcher>
+        </filter-mapping>
+    -->
+    <welcome-file-list>
+        <welcome-file>application/sign/sign.html</welcome-file>
+        <!--<welcome-file>application/index.html</welcome-file>-->
+    </welcome-file-list>
+
+</web-app>

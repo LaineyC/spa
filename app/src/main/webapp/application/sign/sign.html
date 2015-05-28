@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="/application/library/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/application/library/bootstrap/css/bootstrap-theme.css">
+    <script id="cc"src="/application/library/jquery/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            var errorTime = 0,
+                alert = $("#alert"),
+                progress = $("#progress"),
+                signIn = $("#sign-in"),
+                name = $("#name"),
+                password = $("#password"),
+                codeGroup = $("#code-group"),
+                code = $("#code"),
+                codeImg =  $("#code-img"),
+                role = $("#role");
+            /*$.ajax({
+                type: "post",
+                dataType:"json",
+                traditional:true,
+                url: "",
+                success: function(options){
+                    for(var i = 0 ; i < options.length ; i++){
+                        role.append('<option value="' + options[i].value + '">'+ options[i].label+'</option>');
+                    }
+                }
+            });*/
+            var status = {progress:0,max:60,step:10,now:0,response:null,submit:false};
+            function progressRun(){
+                progress.removeClass("hide");
+                var hasError = status.response && status.response.errors && status.response.errors.length;
+                if( status.now < status.max || !hasError){
+                    status.now += status.step;
+                    progress.find("div").attr("aria-valuenow",status.now).css("width",status.now + "%");
+                    if(status.now >= 100){
+                        window.location = "/application/index.html";
+                        return;
+                    }
+                }
+                if(hasError){
+                    progress.addClass("hide");
+                    var errors = status.response.errors;
+                    status = {progress:0,max:60,step:10,now:0,response:null,submit:false};
+                    progress.find("div").attr("aria-valuenow",status.now).css("width",status.now + "%");
+                    errorTime++
+                    alert.removeClass("hide");
+                    alert.text(errors[0]);
+                    if(errorTime >= 3){
+                        codeGroup.removeClass("hide");
+                    }
+                    return;
+                }
+                window.setTimeout(progressRun,10);
+            }
+            signIn.click(function(){
+                if(status.submit)return;
+                var _name = $.trim(name.val()),
+                    _password = $.trim(password.val()),
+                    _code = $.trim(code.val()),
+                    _role = role.val();
+                if(_name === ""){
+                    alert.removeClass("hide");
+                    alert.text("请填写用户名");
+                }
+                else if(_password === ""){
+                    alert.removeClass("hide");
+                    alert.text("请填写用密码");
+                }
+                else if(errorTime >= 3 && _code === ""){
+                    alert.removeClass("hide");
+                    alert.text("请填写验证码");
+                }
+                else{
+                    alert.addClass("hide");
+                    alert.text("");
+                    $.ajax({
+                        type: "post",
+                        dataType:"json",
+                        traditional:true,
+                        data:{name:_name,password:_password,role:_role},
+                        url: "/application/sign/sign-in.json",
+                        beforeSend : function(){
+                            status.submit = true;
+                            progressRun();
+                        },
+                        success: function(data){
+                            status.response = data;
+                            status.submit = false;
+                        }
+                    });
+                }
+            });
+            codeImg.click(function(){
+                $(this).find("img").attr("src","http://manage.dingcai.com/verificationCode.jsp?date=" + new Date().getTime());
+            });
+        });
+    </script>
+    <style type="text/css">
+        html,body{
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+        #container{
+            padding-top: 15%;
+        }
+         #panel {
+            -webkit-box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.15);
+        }
+        label{
+            color: #333333 !important;
+        }
+    </style>
+</head>
+<body class="bg-primary">
+<div id="container" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div id="panel" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">XX管理系统1.0.0</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="alert" class="alert alert-danger hide" role="alert"></div>
+                    <div id="progress" class="progress hide">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">20% Complete</span>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">用户</label>
+                            <div class="col-sm-4">
+                                <input id="name" type="text" class="form-control input-sm"  placeholder="用户">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">口令</label>
+                            <div class="col-sm-4">
+                                <input id="password" type="password" class="form-control input-sm"  placeholder="口令">
+                            </div>
+                        </div>
+                        <div id="code-group" class="form-group hide">
+                            <label class="col-sm-4 control-label">验证码</label>
+                            <div class="col-sm-2">
+                                <input id="code" type="text" class="form-control input-sm"  placeholder="验证码">
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="javascript:void(0);" id="code-img" class="thumbnail">
+                                    <img src="" alt="验证码">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">角色</label>
+                            <div class="col-sm-4">
+                                <select id="role" class="form-control input-sm">
+                                    <option>--请选择角色--</option>
+                                    <option>财务专员</option>
+                                    <option>售后专员</option>
+                                    <option>客服专员</option>
+                                    <option>BOSS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <button id="sign-in" type="button" class="btn btn-primary btn-sm">登录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

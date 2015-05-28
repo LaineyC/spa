@@ -1,0 +1,139 @@
+{
+    "errors": null,
+    "data":{
+        "config": "jsonObject",
+        "permissions": [
+            {
+                "code": "product","name": "商品中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "product.product","name": "商品","icon":"","type":"module",
+                        "children": [
+                            {"code": "product.product.create","name": "创建商品","icon":"","type":"module"},
+                            {"code": "product.product.manage","name": "商品管理","icon":"","type":"module"}
+                        ]
+                    },
+                    {
+                        "code": "product.brand","name": "品牌","icon":"","type":"module",
+                        "children": [
+                            {"code": "product.brand.manage","name": "品牌管理","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "membership","name": "会员中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "membership.setting","name": "设置","icon":"","type":"module",
+                        "children": [
+                            {"code": "membership.setting.level","name": "等级设置","icon":"","type":"module"},
+                            {"code": "membership.setting.point","name": "积分规则","icon":"","type":"module"},
+                            {"code": "membership.setting.recharge","name": "充值规则","icon":"","type":"module"}
+                        ]
+                    },
+                    {
+                        "code": "membership.member","name": "会员","icon":"","type":"module",
+                        "children": [
+                            {"code": "membership.member.create","name": "创建会员","icon":"","type":"module"},
+                            {"code": "membership.member.manage","name": "会员管理","icon":"","type":"module",
+                                "children":[{"code": "membership.member.edit","name": "修改会员","icon":"","type":"module"}]
+                            }
+                        ]
+                    },
+                    {
+                        "code": "membership.report","name": "报表","icon":"","type":"module",
+                        "children": [
+                            {"code": "membership.report.member","name": "会员报表","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "order","name": "订单中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "order.order","name": "订单","icon":"","type":"module",
+                        "children": [
+                            {"code": "order.order.manage","name": "订单管理","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "marketing ","name": "营销中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "marketing.activity","name": "促销活动","icon":"","type":"module",
+                        "children": [
+                            {"code": "marketing.activity.rule","name": "规则设置","icon":"","type":"module"},
+                            {"code": "marketing.activity.manage","name": "活动管理","icon":"","type":"module"}
+                        ]
+                    },
+                    {
+                        "code": "marketing.game","name": "游戏","icon":"","type":"module",
+                        "children": [
+                            {"code": "marketing.game.rule","name": "游戏设置","icon":"","type":"module"},
+                            {"code": "marketing.game.manage","name": "中奖管理","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "rma","name": "售后中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "rma.rma","name": "售后","icon":"","type":"module",
+                        "children": [
+                            {"code": "rma.rma.rule","name": "售后规则","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "purchase","name": "采购中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "purchase.purchase","name": "采购","icon":"","type":"module",
+                        "children": [
+                            {"code": "purchase.purchase.rule","name": "采购规则","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "inventory","name": "库存中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "inventory.inventory","name": "库存","icon":"","type":"module",
+                        "children": [
+                            {"code": "inventory.inventory.rule","name": "库存规则","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "finance","name": "财务中心","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "finance.finance","name": "财务","icon":"","type":"module",
+                        "children": [
+                            {"code": "finance.finance.rule","name": "财务规则","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "system","name": "系统配置","icon":"","type":"module",
+                "children": [
+                    {
+                        "code": "system.log","name": "日志","icon":"","type":"module",
+                        "children": [
+                            {"code": "system.log.rule","name": "日志规则","icon":"","type":"module"}
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

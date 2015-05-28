@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lite.app.membership.dao.MemberDao">
+
+    <resultMap id="po" type="com.lite.app.membership.po.MemberPo">
+        <id column="id" jdbcType="NUMERIC" property="id" />
+        <result column="name"  jdbcType="VARCHAR" property="name"/>
+        <result column="age"  jdbcType="NUMERIC" property="age"/>
+        <result column="level_id"  jdbcType="NUMERIC" property="levelId"/>
+        <result column="phone"  jdbcType="VARCHAR" property="phone"/>
+        <result column="email"  jdbcType="VARCHAR" property="email"/>
+        <result column="birthDay"  jdbcType="DATE" property="birthDay"/>
+        <result column="point"  jdbcType="NUMERIC" property="point"/>
+        <result column="isDelete"  jdbcType="TINYINT" property="isDelete"/>
+    </resultMap>
+    <!--表名-->
+    <sql id="table">Mem_Member</sql>
+    <!--默认数据库生成id，insert不包括id-->
+    <sql id="insertColumns"></sql>
+    <!--默认除了id以为的所有字段-->
+    <sql id="updateColumns"></sql>
+    <!--默认所有字段-->
+    <sql id="selectColumns"></sql>
+
+    <insert id="insert"></insert>
+    <insert id="insertBatch"></insert>
+    <update id="delete"></update>
+    <update id="deleteBatch"></update>
+    <update id="update"></update>
+    <update id="updateBatch"></update>
+    <select id="selectById" resultMap="po"></select>
+    <select id="selectByIds" resultMap="po"></select>
+    <select id="selectAll" resultMap="po"></select>
+    <select id="exists" resultType="java.lang.Boolean"></select>
+
+</mapper>

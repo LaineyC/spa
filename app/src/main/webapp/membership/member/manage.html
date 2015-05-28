@@ -1,0 +1,145 @@
+<div ng-controller="membership.member.manage">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal" role="form" novalidate>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">昵称</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm"  placeholder="昵称">
+                    </div>
+                    <label class="col-sm-1 control-label">手机</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm" placeholder="手机号码">
+                    </div>
+                    <label class="col-sm-1 control-label">邮箱</label>
+                    <div class="col-sm-3">
+                        <input type="email" class="form-control input-sm" placeholder="邮箱地址">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">等级</label>
+                    <div class="col-sm-3">
+                        <select class="form-control input-sm">
+                            <option>--请选择等级--</option>
+                            <option>初级</option>
+                            <option>中级</option>
+                            <option>高级</option>
+                            <option>顶级</option>
+                            <option>究极</option>
+                            <option>GG</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">兴趣</label>
+                    <div class="col-sm-3">
+                        <label class="checkbox-inline">
+                            <input type="checkbox"  value="option1">乒乓
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option2">DOTA
+                        </label>
+                    </div>
+                    <label class="col-sm-1 control-label">性别</label>
+                    <div class="col-sm-3">
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" value="option1">男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" value="option2">女
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button ng-click="search()" type="button" class="btn btn-primary btn-sm" tabindex="-1">搜索</button>
+                        <button type="button" class="btn btn-primary btn-sm" location-go="/membership/member/create" tabindex="-1">创建</button>
+                        <button type="button" class="btn btn-danger btn-sm" tabindex="-1">删除选中</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning dropdown-toggle btn-sm" data-toggle="dropdown">
+                                导入<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning dropdown-toggle btn-sm" data-toggle="dropdown">
+                                导出<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-condensed table-hover">
+                <thead>
+                <tr class="info">
+                    <th class="col-sm-1"><input type="checkbox"/></th>
+                    <th class="col-sm-6">姓名</th>
+                    <th class="col-sm-3">年龄</th>
+                    <th class="col-sm-2">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="member in pagedResult.result track by $index" ng-class="member.checked?'active':''">
+                    <td><input type="checkbox" ng-model="member.checked"/></td>
+                    <td>{{member.name}}</td>
+                    <td>{{member.age}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm">详情</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">详情</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="javascript:void(0);" location-go="/membership/member/edit">编辑</a></li>
+                                <li><a href="#" >删除</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <pagination class="pagination-sm" boundary-links="true" rotate="false" max-size="5" total-items="pagedResult.total"
+            ng-model="so.page" ng-change="search()" items-per-page="so.pageSize"
+            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            </pagination>
+        </div>
+
+        <div class="col-sm-6 text-right">
+            <ul class="list-inline">
+                <li>{{(so.page-1)*so.pageSize+1}} - {{(so.page-1)*so.pageSize+pagedResult.result.length}}  / {{pagedResult.total}}</li>
+                <li>
+                    <select class="form-control input-sm">
+                    <option>10</option>
+                    <option>15</option>
+                    <option>25</option>
+                    </select>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-refresh"></span>刷新
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

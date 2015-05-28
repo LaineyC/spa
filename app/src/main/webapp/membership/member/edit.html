@@ -1,0 +1,67 @@
+<div ng-controller="membership.member.edit">
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li><a href="javascript:void(0);" location-go="/membership/member/manage">会员管理</a></li>
+                <li class="active">会员编辑</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="membership_member_edit_form" class="form-horizontal" validate-submit="edit()" role="form" novalidate>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">头像</label>
+                    <div class="col-sm-3">
+                        <div style="position: relative;overflow: hidden;width: 125px;height: 125px;">
+                            <img style="position: absolute;top:0;right: 0;" ng-src="{{member.head}}" alt="..." style="width: 125px;height: 125px;" class="img-thumbnail">
+                            <!--accept="image/*"-->
+                            <input style="position: absolute;top:0;right: 0;opacity:0;font-size: 300px;cursor:pointer;" multiple="multiple" ng-file-select="selectHead($files)" type="file" placeholder="头像" >
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 control-label">昵称</label>
+                    <div class="col-sm-3 has-feedback">
+                        <input name="name" ng-model="member.name" type="text" class="form-control input-sm" placeholder="昵称" required unique="{url:'/membership/member/exists.json'}" >
+                        <span ng-show="membership_member_edit_form.name.$loading" class="glyphicon glyphicon-refresh form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">年龄</label>
+                    <div class="col-sm-3">
+                        <input name="age" ng-model="member.age" type="number" class="form-control input-sm"  placeholder="年龄" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">手机</label>
+                    <div class="col-sm-3">
+                        <input name="phone" ng-model="member.phone" type="text" class="form-control input-sm" placeholder="手机号码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">性别</label>
+                    <div class="col-sm-3">
+                        <label class="radio-inline">
+                            <input name="sex" ng-model="member.sex" type="radio" ng-value="1">男
+                        </label>
+                        <label class="radio-inline">
+                            <input name="sex" ng-model="member.sex" type="radio"  ng-value="0">女
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">备注</label>
+                    <div class="col-sm-7">
+                        <umeditor name="remark" config="editorConfig" style="width:100%;height: 250px;" ng-model="member.remark"></umeditor>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3 col-sm-offset-4">
+                        <button type="submit" ng-disabled="membership_member_edit_form.$pristine" class="btn btn-primary btn-sm">编辑</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

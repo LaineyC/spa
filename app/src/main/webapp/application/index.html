@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>单页WEB应用 Single Page Application</title>
+    <link rel="shortcut icon" href="/application/resource/image/favicon.ico" />
+    <link rel="stylesheet" href="/application/library/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/application/library/bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/application/resource/style/application.css">
+    <script data-main="/application/main.js" src="/application/library/require/require.js"></script>
+</head>
+<body id="application" ng-controller="application.controller">
+    <header id="function-navbar" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#application-navbar-collapse">
+                    <span class="sr-only">导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0);">LOGO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="application-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="javascript:void(0);" location-go="/" ng-click="pageTabs[0].active=true;"><span class="glyphicon glyphicon-home"></span>首页</a></li>
+                    <li><a href="javascript:void(0);" ><span class="glyphicon glyphicon-question-sign"></span>帮助</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text">2014-03-18 09:57:46</p></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" ng-click="messageSearch()" href="javascript:void(0);" >
+                            消息<span class="badge" ng-bind="keepMessages.length"></span>
+                        </a>
+                        <ul id="message-table" class="dropdown-menu">
+                            <li class="container-fluid">
+                                <table class="table table-bordered table-condensed table-hover">
+                                    <thead>
+                                    <tr class="info">
+                                        <th>#</th><th>级别</th><th>内容</th><th>时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="{{message.type}}" ng-repeat="message in messagePagedResult.result track by $index">
+                                        <td>{{$index + 1}}</td><td>{{message.type}}</td><td>{{message.content}}</td><td>{{member.dateTime}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="4">
+                                            <pagination class="pagination-sm" boundary-links="true" rotate="false" max-size="5" total-items="messagePagedResult.total"
+                                            ng-model="messageSo.page" ng-change="messageSearch()"items-per-page="messageSo.pageSize"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                                            </pagination>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">更多<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">功能1</a></li>
+                            <li><a href="#">功能2</a></li>
+                            <li><a href="#">功能3</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">功能4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:void(0);" ng-click="openExitModal()"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div id="container" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <nav id="business-navbar">
+                    <accordion>
+                        <accordion-group ng-repeat="p1 in permissions track by $index">
+                            <accordion-heading ng-click="$parent.is" ><span ng-bind="p1.name"></span></accordion-heading>
+                            <ul class="nav nav-pills" role="tablist" >
+                                <li role="presentation" ng-repeat="p2 in p1.children track by $index">
+                                    <a ng-if="!p2.children.length" href="javascript:void(0);" location-go="{{p2.url}}" ><span ng-bind="p2.name"></span></a>
+                                    <a ng-if="p2.children.length" class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><span ng-bind="p2.name" ></span><span ng-init="caretClass='caret'"ng-class="caretClass"></span></a>
+                                    <ul ng-if="p2.children.length" class="dropdown-menu" role="menu">
+                                        <li ng-repeat="p3 in p2.children track by $index" ng-click="addBusinessTab(p3);"><a href="javascript:void(0);" location-go="{{p3.url}}"><span ng-bind="p3.name"></span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </accordion-group>
+                    </accordion>
+                </nav>
+            </div>
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <nav id="business-page-tabs">
+                            <tabset><tab ng-repeat="tab in pageTabs track by $index" active="tab.active" location-go="{{tab.url}}" heading="{{tab.name}}"></tab></tabset>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="business-page">
+                            <div ng-view ng-class="location.status.animate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loading" ng-show="loading.status.loading"></div>
+    <div id="message-box" class="hide" ng-class="keepMessages.length || transientMessages.length ? 'show': ''">
+        <div><button class="btn btn-default" ng-click="keepMessages.length=0;transientMessages.length=0;"><span class="glyphicon glyphicon-remove"></span>清空</button></div>
+        <alert ng-repeat="message in transientMessages track by $index" type="{{message.type}}" close="transientMessages.splice($index,1)">{{message.content}}</alert>
+        <alert ng-repeat="message in keepMessages track by $index" type="{{message.type}}" close="keepMessages.splice($index,1)">{{message.content}}</alert>
+    </div>
+    <script id="application/exit.html" type="text/ng-template" >
+        <div class="modal-header">
+            <h3 class="modal-title">退出系统</h3>
+        </div>
+        <div class="modal-body">确定退出系统吗？</div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="exit()">确定</button>
+        </div>
+    </script>
+</body>
+</html>
